@@ -52,30 +52,38 @@ button:hover * {
 
 .results {
   margin: 0 auto;
+  border: 1px solid black;
+  padding: 0px;
+  margin-top: 1.2rem;
 }
 
 .results ul {
   list-style: none;
   padding: 0px;
-  border: 1px solid black;
+  margin: 0px;
 }
 
 .results ul li {
   padding: 1rem;
   border-bottom: 1px solid black;
+  /* border-top: 1px solid black; */
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.results ul li:first-of-type {
+.results-header {
   font-size: 18px;
   color: #ee6055;
   font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  padding: 1rem;
+  border-bottom: 1px solid black;
 }
-
-.results ul li:first-of-type a {
+.results-header a {
   font-size: 18px;
   color: #ee6055;
   font-weight: 700;
