@@ -93,7 +93,7 @@ button:hover * {
   border-bottom: none;
 }
 
-.results ul li:not(:first-of-type):hover {
+.results ul li:hover {
   background-color: #f9f9f9;
   color: #333;
 }

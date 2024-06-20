@@ -47,11 +47,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function addToSearchHistory(title) {
-    const timestamp = new Date().toISOString().replace("T", ", ").slice(0, 16);
+    const timestamp = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
     searchHistory.push({ title, timestamp });
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+    alert(title + " added search history!");
     displaySearchHistory();
   }
+
+  document.querySelector(".main .icon-close").addEventListener("click", () => {
+    document.getElementById("search-field").value = "";
+    searchResults = [];
+    displaySearchHistory();
+  });
 
   document
     .querySelector(".results a")
@@ -59,8 +66,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   searchField.addEventListener("input", async (e) => {
     const query = e.target.value;
-    if (query.length < 1) {
-      resultsSection.innerHTML = "";
+    console.log("query", query.length === 0);
+    if (query.length === 0) {
+      searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+      displaySearchHistory();
       return;
     }
 
@@ -69,21 +78,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const searchResults = data.data.items.map((item) => ({
       title: item.name,
-      description: item.description || "",
-      url: item.url,
       published_at: item.published_at,
     }));
 
     resultsSection.innerHTML = searchResults
       .map(
         (result) => `
-        <li>
-          <div class="left">${result.title}</div>
-          <div class="timestamp">${result.published_at}</div>
-        </li>
-      `
+          <li class="result-item" data-title="${result.title}">
+            <div class="left">${result.title}</div>
+            <div class="timestamp">${result.published_at}</div>
+          </li>
+        `
       )
       .join("");
+
+    const resultItems = document.querySelectorAll(".result-item");
+    resultItems.forEach((li) =>
+      li.addEventListener("click", (e) => {
+        const title = e.currentTarget.getAttribute("data-title");
+        addToSearchHistory(title);
+      })
+    );
   });
 
   displaySearchHistory();
