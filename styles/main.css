@@ -18,6 +18,7 @@ body {
 .results {
   width: 60%;
 }
+
 .main .input-field {
   border: 2px solid black;
   height: 40px;
@@ -84,7 +85,6 @@ button:hover * {
   border-bottom: 1px solid black;
 }
 .results-header a {
-  font-size: 18px;
   color: #ee6055;
   font-weight: 700;
 }
@@ -102,4 +102,14 @@ button:hover * {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+@media only screen and (max-width: 767px) {
+  .main,
+  .results {
+    width: 99%;
+  }
+  .results-header {
+    font-size: 16px;
+  }
 }
