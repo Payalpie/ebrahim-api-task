@@ -113,3 +113,10 @@ button:hover * {
     font-size: 16px;
   }
 }
+
+.loading {
+  display: none;
+  justify-content: center;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
