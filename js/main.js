@@ -7,13 +7,16 @@ document.addEventListener("DOMContentLoaded", () => {
   let searchHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
 
   function displaySearchHistory() {
+    searchHistory.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     resultsSection.innerHTML = searchHistory
       .map(
         (item) => `
         <li>
           <div class="left">${item.title}</div>
           <div class="timestamp">
-            <span>${item.timestamp}</span>
+            <span>${new Date(item.timestamp).toLocaleDateString()} ${new Date(
+          item.timestamp
+        ).toLocaleTimeString()}</span>
             <button class="icon-close" data-title="${item.title}">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                 <path d="M18.3 5.7c-.4-.4-1-.4-1.4 0L12 10.6 7.1 5.7C6.7 5.3 6.1 5.3 5.7 5.7c-.4.4-.4 1 0 1.4L10.6 12l-4.9 4.9c-.4.4-.4 1 0 1.4.4.4 1 .4 1.4 0L12 13.4l4.9 4.9c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4L13.4 12l4.9-4.9c.4-.4.4-1 0-1.4z" />
@@ -47,11 +50,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function addToSearchHistory(title) {
-    const timestamp = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
+    // const timestamp = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
+    const timestamp = new Date();
     searchHistory.push({ title, timestamp });
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
     alert(title + " added search history!");
     displaySearchHistory();
+    document.getElementById("search-field").value = "";
   }
 
   document.querySelector(".main .icon-close").addEventListener("click", () => {
